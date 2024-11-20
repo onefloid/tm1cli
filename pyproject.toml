@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "tm1cli"
+version = "0.1.0"
+description = "A command-line interface (CLI) tool for interacting with TM1 servers using TM1py."
+authors = ["onefloid <onefloid@gmx.de>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+TM1py = "^2.0.4"
+typer = "^0.13.1"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+ruff = "^0.7.4"
+pytest = "^8.3.3"
+
+[tool.poetry.scripts]
+tm1cli = "tm1cli.main:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
