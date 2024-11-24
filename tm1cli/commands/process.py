@@ -9,6 +9,23 @@ from tm1cli.utils import resolve_database
 app = typer.Typer()
 
 @app.command()
+def list(
+    ctx: typer.Context,
+    database: Annotated[
+        str, typer.Option("--database", "-d", help="Specify the database to use")
+    ] = None,
+):
+    """
+    Show if process exists
+    """
+    db_config = resolve_database(
+        ctx, database
+    )
+
+    with TM1Service(**db_config) as tm1:
+        [print(process) for process in tm1.processes.get_all_names()]
+
+@app.command()
 def exists(
     ctx: typer.Context,
     name: str,
@@ -25,3 +42,5 @@ def exists(
 
     with TM1Service(**db_config) as tm1:
         print(tm1.processes.exists(name))
+
+
