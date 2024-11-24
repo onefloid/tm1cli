@@ -3,10 +3,13 @@ import json
 import typer
 import yaml
 from rich import print
+from rich.console import Console
+from rich.table import Table
 from TM1py import TM1Service
 from typing_extensions import Annotated
 
 app = typer.Typer()
+console = Console()
 
 # Global state to store loaded configurations
 configs = {}
@@ -56,7 +59,7 @@ def threads(
     beautify: Annotated[
         bool,
         typer.Option(
-            "--beautify", "-b", help="Flag for printing json return with indentation."
+            "--beautify", "-b", help="Flag for printing a table."
         ),
     ] = False,
 ):
@@ -64,9 +67,13 @@ def threads(
     with TM1Service(**db_config) as tm1:
         threads = tm1.sessions.get_threads_for_current()
         if beautify:
+            table = Table(*threads[0].keys(), title="Threads")
+            for thread in threads:
+                table.add_row(*[str(value) for value in thread.values()])
+            console.print(table)
+        else:
             threads = json.dumps(threads, indent=4)
-        print(threads)
-
+            print(threads)
 
 if __name__ == "__main__":
     app()
