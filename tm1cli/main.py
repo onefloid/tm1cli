@@ -1,8 +1,10 @@
+import json
 import os
 
 import typer
 from dotenv import load_dotenv
 from TM1py import TM1Service
+from typing_extensions import Annotated
 
 app = typer.Typer()
 
@@ -29,10 +31,20 @@ def tm1_version():
         print(version)
 
 @app.command()
-def threads():
+def threads(
+    beautify: Annotated[
+        bool,
+        typer.Option(
+            "--beautify", "-b", help="Flag for printing json return with indentation."
+        ),
+    ] = False
+):
     with TM1Service(**config) as tm1:
         threads = tm1.sessions.get_threads_for_current()
+        if beautify:
+            threads = json.dumps(threads, indent=4)
         print(threads)
+
 
 if __name__ == "__main__":
     app()
