@@ -11,18 +11,16 @@ from typing_extensions import Annotated
 app = typer.Typer()
 console = Console()
 
-# Global state to store loaded configurations
-configs = {}
-default_db_config = {}
 
-def resolve_database(database_name: str) -> dict:
+def resolve_database(ctx: typer.Context, database_name: str) -> dict:
     """
     Resolves the database name to its configuration.
     If no database is specified, use the default database.
     """
     if not database_name:
-        return default_db_config
+        return ctx.obj.get("default_db_config")
     
+    configs = ctx.obj.get("configs")
     if database_name not in configs:
         typer.echo(f"Error: Database '{database_name}' not found in configuration file: databases.yaml.")
         raise typer.Exit(code=1)
@@ -30,7 +28,7 @@ def resolve_database(database_name: str) -> dict:
     return configs[database_name]
 
 @app.callback()
-def main():
+def main(ctx: typer.Context):
     """
     CLI tool to interact with TM1 using TM1py.
     """
@@ -40,19 +38,23 @@ def main():
         databases = yaml.safe_load(file)["databases"]
         configs = {db['name']: {key: value for key, value in db.items() if key != 'name'} for db in databases}
         default_db_config = databases[0]
+        ctx.obj = {"configs": configs, "default_db_config": default_db_config}
 
 @app.command()
 def tm1_version(
+    ctx: typer.Context,
     database: Annotated[
         str, typer.Option("--database", "-d", help="Specify the database to use")
     ] = None
 ):
-    with TM1Service(**default_db_config) as tm1:
+    db_config = resolve_database(ctx, database)
+    with TM1Service(**db_config) as tm1:
         version = tm1.server.get_product_version()
         print(version)
 
 @app.command()
 def threads(
+    ctx: typer.Context,
     database: Annotated[
         str, typer.Option("--database", "-d", help="Specify the database to use")
     ] = None,
@@ -63,7 +65,7 @@ def threads(
         ),
     ] = False,
 ):
-    db_config = resolve_database(database)
+    db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
         threads = tm1.sessions.get_threads_for_current()
         if beautify:
