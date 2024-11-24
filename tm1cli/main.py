@@ -22,7 +22,6 @@ def main(ctx: typer.Context):
     """
     
     with open("databases.yaml", "r") as file:
-        global configs, default_db_config
         databases = yaml.safe_load(file)["databases"]
         configs = {db['name']: {key: value for key, value in db.items() if key != 'name'} for db in databases}
         default_db_config = databases[0]
