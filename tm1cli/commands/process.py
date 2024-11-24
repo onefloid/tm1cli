@@ -8,6 +8,7 @@ from tm1cli.utils import resolve_database
 
 app = typer.Typer()
 
+
 @app.command()
 def list(
     ctx: typer.Context,
@@ -18,12 +19,10 @@ def list(
     """
     Show if process exists
     """
-    db_config = resolve_database(
-        ctx, database
-    )
 
-    with TM1Service(**db_config) as tm1:
+    with TM1Service(**resolve_database(ctx, database)) as tm1:
         [print(process) for process in tm1.processes.get_all_names()]
+
 
 @app.command()
 def exists(
@@ -36,11 +35,6 @@ def exists(
     """
     Show if process exists
     """
-    db_config = resolve_database(
-        ctx, database
-    )
 
-    with TM1Service(**db_config) as tm1:
+    with TM1Service(**resolve_database(ctx, database)) as tm1:
         print(tm1.processes.exists(name))
-
-
