@@ -5,8 +5,6 @@ from typing_extensions import Annotated
 
 from tm1cli.utils import resolve_database
 
-# from TM1py.Objects import Process
-
 app = typer.Typer()
 
 
