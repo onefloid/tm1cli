@@ -2,6 +2,7 @@ import json
 
 import typer
 import yaml
+from rich import print
 from TM1py import TM1Service
 from typing_extensions import Annotated
 
