@@ -1,0 +1,27 @@
+import typer
+from TM1py.Services import TM1Service
+from typing_extensions import Annotated
+
+from tm1cli.utils import resolve_database
+
+# from TM1py.Objects import Process
+
+app = typer.Typer()
+
+@app.command()
+def exists(
+    ctx: typer.Context,
+    name: str,
+    database: Annotated[
+        str, typer.Option("--database", "-d", help="Specify the database to use")
+    ] = None,
+):
+    """
+    Show if process exists
+    """
+    db_config = resolve_database(
+        ctx, database
+    )
+
+    with TM1Service(**db_config) as tm1:
+        print(tm1.processes.exists(name))

@@ -8,11 +8,12 @@ from rich.table import Table
 from TM1py import TM1Service
 from typing_extensions import Annotated
 
+import tm1cli.commands.process as process
 from tm1cli.utils import resolve_database
 
-app = typer.Typer()
 console = Console()
-
+app = typer.Typer()
+app.add_typer(process.app, name="process")
 
 @app.callback()
 def main(ctx: typer.Context):
