@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tm1cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "A command-line interface (CLI) tool for interacting with TM1 servers using TM1py."
 authors = ["onefloid <onefloid@gmx.de>"]
 license = "MIT License"
