@@ -1,13 +1,13 @@
 # TM1-CLI
 
-**TM1-CLI** is a command-line interface (CLI) tool to interact with TM1 servers using [TM1py](https://github.com/cubewise-code/tm1py). It supports environment-based configuration via `.env` files for flexible and secure connection management.
+**TM1-CLI** is a command-line interface (CLI) tool to interact with TM1 servers using [TM1py](https://github.com/cubewise-code/tm1py).
 
 ---
 
 ## Features
 
 - Easily execute TM1 functions via the command line.
-- Manage connection settings with `.env` files.
+- Manage multiple connection settings with `databases.yaml` file.
 - Built with Python, powered by [Typer](https://typer.tiangolo.com/) for intuitive CLI design.
 
 ---
@@ -51,12 +51,21 @@ tm1cli --help
 
 ### Configuration
 
-Connection settings are stored in a .env file. Here's an example:
+Connection settings are stored in a _databases.yaml_ file. Here's an example:
 
-```
-TM1_ADDRESS=localhost
-TM1_USER=admin
-TM1_PASSWORD=apple
-TM1_SSL=true
-TM1_PORT=12345
+```yaml
+databases:
+  - name: mydb
+    address: localhost
+    port: 10001
+    ssl: false
+    user: admin
+    password: ""
+
+  - name: myremotedb
+    address: tm1.example.com
+    port: 20000
+    ssl: false
+    user: admin
+    password: apple
 ```

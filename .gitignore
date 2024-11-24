@@ -1,5 +1,5 @@
 .venv/
 .vscode/
 dist/
-.env
+databases.yaml
 __pycache__/

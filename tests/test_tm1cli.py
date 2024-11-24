@@ -5,8 +5,12 @@ from tm1cli.main import app
 
 runner = CliRunner()
 
-def test_tm1_version():
-    result = runner.invoke(app, ["tm1-version"])
+@pytest.mark.parametrize("option", [None, ["--database", "mydb"], ["-d", "remotedb"]])
+def test_tm1_version(option):
+    if (option):
+        result = runner.invoke(app, ["tm1-version", *option])
+    else:
+        result = runner.invoke(app, ["tm1-version"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
 

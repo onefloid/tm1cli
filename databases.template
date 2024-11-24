@@ -1,0 +1,14 @@
+databases:
+  - name: mydb
+    address: localhost
+    port: 10001
+    ssl: false
+    user: admin
+    password: ""
+
+  - name: myremotedb
+    address: tm1.example.com
+    port: 20000
+    ssl: false
+    user: admin
+    password: apple

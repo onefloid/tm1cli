@@ -10,7 +10,7 @@ readme = "README.md"
 python = "^3.10"
 TM1py = "^2.0.4"
 typer = "^0.13.1"
-python-dotenv = "^1.0.1"
+pyyaml = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
