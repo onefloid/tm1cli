@@ -28,5 +28,11 @@ def tm1_version():
         version = tm1.server.get_product_version()
         print(version)
 
+@app.command()
+def threads():
+    with TM1Service(**config) as tm1:
+        threads = tm1.sessions.get_threads_for_current()
+        print(threads)
+
 if __name__ == "__main__":
     app()
