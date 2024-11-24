@@ -8,24 +8,11 @@ from rich.table import Table
 from TM1py import TM1Service
 from typing_extensions import Annotated
 
+from tm1cli.utils import resolve_database
+
 app = typer.Typer()
 console = Console()
 
-
-def resolve_database(ctx: typer.Context, database_name: str) -> dict:
-    """
-    Resolves the database name to its configuration.
-    If no database is specified, use the default database.
-    """
-    if not database_name:
-        return ctx.obj.get("default_db_config")
-    
-    configs = ctx.obj.get("configs")
-    if database_name not in configs:
-        typer.echo(f"Error: Database '{database_name}' not found in configuration file: databases.yaml.")
-        raise typer.Exit(code=1)
-    
-    return configs[database_name]
 
 @app.callback()
 def main(ctx: typer.Context):
