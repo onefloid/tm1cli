@@ -7,7 +7,7 @@ from tm1cli.utils import resolve_database
 
 app = typer.Typer()
 
-
+@app.command(name="ls", help="alias of list")
 @app.command()
 def list(
     ctx: typer.Context,
