@@ -33,15 +33,21 @@ poetry install
 
 ## Usage
 
-### Basic Command
+### Commands
 
 Connect to a TM1 server and print its version:
 
 ```bash
 tm1cli tm1-version
+tm1cli threads
+tm1cli whoami
+
+tm1cli process list
+tm1cli process exists <process_name>
+tm1cli process clone --from <source_db> --to <target_db>
 ```
 
-### Available Commands
+### All Available Commands
 
 Run the following to see all available commands:
 
