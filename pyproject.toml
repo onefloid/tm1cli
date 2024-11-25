@@ -5,6 +5,7 @@ description = "A command-line interface (CLI) tool for interacting with TM1 serv
 authors = ["onefloid <onefloid@gmx.de>"]
 license = "MIT License"
 readme = "README.md"
+repository = "https://github.com/onefloid/tm1cli"
 
 [tool.poetry.dependencies]
 python = "^3.10"
