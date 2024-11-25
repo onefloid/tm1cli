@@ -22,3 +22,28 @@ def test_threads(option):
         result = runner.invoke(app, ["threads"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
+
+@pytest.mark.parametrize("command", ["list", "ls"])
+def test_process_list(command):
+    result = runner.invoke(app, ["process", command])
+    assert result.exit_code == 0
+    assert isinstance(result.stdout, str)
+
+def test_process_exists():
+    result = runner.invoke(app, ["process", "exists", "example"])
+    assert result.exit_code == 0
+    assert isinstance(result.stdout, str)
+    assert result.stdout == "True\n" or result.stdout == "False\n"
+
+def test_process_clone_missing_from_to():
+    result = runner.invoke(app, ["process", "clone", "example"])
+    assert result.exit_code == 1
+    assert "Error: Source database and target database must be different." in result.output
+
+def test_process_clone_not_exists():
+    result = runner.invoke(app, ["process", "clone", "example", "--to", "remotedb"])
+    assert result.exit_code == 1
+    assert "Error: Process does not exist in source database!" in result.output
+
+def test_process_clone_sucess():
+    ...
