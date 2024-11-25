@@ -1,3 +1,19 @@
+# v0.1.2 - 2024-11-25
+
+### Features
+
+- Add alias `procees ls` for `process list`
+- New command: `whoami`
+
+### Fixes
+
+- Renamed *databases.template* to *databases.yaml.template*
+
+### Chore
+
+- Added repository url to pyproject.toml
+- Improved test coverage
+
 # v0.1.1 - 2024-11-24
 
 ### Features
