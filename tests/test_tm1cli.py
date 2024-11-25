@@ -14,6 +14,16 @@ def test_tm1_version(option):
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
 
+def test_whoami():
+    result = runner.invoke(app, ["whoami"])
+    assert result.exit_code == 0
+    assert isinstance(result.stdout, str)
+    assert "Name" in result.stdout
+    assert "FriendlyName" in result.stdout
+    assert "Enabled" in result.stdout
+    assert "Type" in result.stdout
+    assert "Groups" in result.stdout
+
 @pytest.mark.parametrize("option", [None, "--beautify", "-b"])
 def test_threads(option):
     if (option):

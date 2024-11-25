@@ -40,6 +40,17 @@ def tm1_version(
         print(version)
 
 @app.command()
+def whoami(
+    ctx: typer.Context,
+    database: Annotated[
+        str, typer.Option("--database", "-d", help="Specify the database to use")
+    ] = None
+):
+    with TM1Service(**resolve_database(ctx, database)) as tm1:
+        user = tm1.security.get_current_user()
+        print(user)
+
+@app.command()
 def threads(
     ctx: typer.Context,
     database: Annotated[
