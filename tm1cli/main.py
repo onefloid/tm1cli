@@ -9,8 +9,8 @@ from TM1py import TM1Service
 from typing_extensions import Annotated
 
 import tm1cli.commands.process as process
-from tm1cli.utils import resolve_database
-from tm1cli.Utils.cli_param import DATABASE_OPTION
+from tm1cli.utils.cli_param import DATABASE_OPTION
+from tm1cli.utils.various import resolve_database
 
 console = Console()
 app = typer.Typer()

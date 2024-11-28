@@ -7,9 +7,9 @@ from TM1py.Objects import Process
 from TM1py.Services import TM1Service
 from typing_extensions import Annotated
 
-from tm1cli.utils import print_error_and_exit, resolve_database
-from tm1cli.Utils.cli_param import DATABASE_OPTION
-from tm1cli.Utils.tm1yaml import dump_process, load_process
+from tm1cli.utils.cli_param import DATABASE_OPTION
+from tm1cli.utils.tm1yaml import dump_process, load_process
+from tm1cli.utils.various import print_error_and_exit, resolve_database
 
 app = typer.Typer()
 
