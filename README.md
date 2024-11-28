@@ -48,6 +48,8 @@ tm1cli whoami
 tm1cli process list
 tm1cli process exists <process_name>
 tm1cli process clone --from <source_db> --to <target_db>
+tm1cli process dump <name> --folder <path> --format <json|yaml>
+tm1cli process load <name> --folder <path> --format <json|yaml>
 ```
 
 ### All Available Commands
