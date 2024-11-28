@@ -1,5 +1,8 @@
 # TM1-CLI
 
+![PyPI - License](https://img.shields.io/pypi/l/tm1cli)
+![PyPI - Version](https://img.shields.io/pypi/v/tm1cli)
+
 **TM1-CLI** is a command-line interface (CLI) tool to interact with TM1 servers using [TM1py](https://github.com/cubewise-code/tm1py).
 
 ---
