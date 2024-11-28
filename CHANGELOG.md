@@ -1,4 +1,6 @@
-# v0.1.2 - 2024-11-25
+# Changelog
+
+## v0.1.2 - 2024-11-25
 
 ### Features
 
@@ -11,10 +13,10 @@
 
 ### Chore
 
-- Added repository url to pyproject.toml
-- Improved test coverage
+- Various refactorings
+- Improved docs
 
-# v0.1.1 - 2024-11-24
+## v0.1.1 - 2024-11-24
 
 ### Features
 
