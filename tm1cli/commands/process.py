@@ -8,6 +8,7 @@ from TM1py.Services import TM1Service
 from typing_extensions import Annotated
 
 from tm1cli.utils import print_error_and_exit, resolve_database
+from tm1cli.Utils.cli_param import DATABASE_OPTION
 from tm1cli.Utils.tm1yaml import dump_process, load_process
 
 app = typer.Typer()
@@ -19,13 +20,12 @@ def _get_process(name: str, database_config: dict) -> Process:
         process = tm1.processes.get(name)
     return process
 
+
 @app.command(name="ls", help="alias of list")
 @app.command()
 def list(
     ctx: typer.Context,
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None,
+    database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
     Show if process exists
@@ -39,9 +39,7 @@ def list(
 def exists(
     ctx: typer.Context,
     name: str,
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None,
+    database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
     Show if process exists
@@ -80,9 +78,7 @@ def dump(
     name: str,
     output_folder: Annotated[str, typer.Option("--folder", help="Specify the file where the process is dumped to")],
     format: Annotated[str, typer.Option("--format", help="Specify the output format of ")],
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None,
+    database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
     Dumps a process to a file
@@ -106,9 +102,7 @@ def load(
     name: str,
     input_folder: Annotated[str, typer.Option("--folder", help="Specify the folder from where the file is loaded")],
     format: Annotated[str, typer.Option("--format", help="Specify the input format")],
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None,
+    database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
     Load a process from a file
