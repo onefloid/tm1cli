@@ -21,7 +21,7 @@ def _get_process(name: str, database_config: dict) -> Process:
     return process
 
 
-@app.command(name="ls", help="alias of list")
+@app.command(name="ls", help="Alias for list")
 @app.command()
 def list(
     ctx: typer.Context,
