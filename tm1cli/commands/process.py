@@ -75,6 +75,7 @@ def clone(
         if response.ok:
             print(f"[bold green]Sucess: Process [italic]{name}[/italic] was cloned![/bold green]")
 
+@app.command(name="export", help="Alias for dump")
 @app.command()
 def dump(
     ctx: typer.Context,
@@ -99,6 +100,7 @@ def dump(
     else:
         print_error_and_exit(f"The format: {format} is not valid. Valid formats are json or yaml.")
 
+@app.command(name="import", help="Alias for load")
 @app.command()
 def load(
     ctx: typer.Context,
