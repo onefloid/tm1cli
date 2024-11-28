@@ -7,7 +7,7 @@ from TM1py.Objects import Process
 from TM1py.Services import TM1Service
 from typing_extensions import Annotated
 
-from tm1cli.utils import resolve_database
+from tm1cli.utils import print_error_and_exit, resolve_database
 from tm1cli.Utils.tm1yaml import dump_process, load_process
 
 app = typer.Typer()
@@ -15,8 +15,7 @@ app = typer.Typer()
 def _get_process(name: str, database_config: dict) -> Process:
     with TM1Service(**database_config) as tm1:
         if not tm1.processes.exists(name):
-            print("[bold red]Error: Process does not exist in source database![/bold red]")
-            raise typer.Exit(code=1)
+            print_error_and_exit("Process does not exist in source database!")
         process = tm1.processes.get(name)
     return process
 
@@ -66,8 +65,7 @@ def clone(
     source_config = resolve_database(ctx, source_database)
     target_config = resolve_database(ctx, target_database)
     if source_config == target_config:
-        print("[bold red]Error: Source database and target database must be different.[/bold red]")
-        raise typer.Exit(code=1)
+        print_error_and_exit("Source database and target database must be different.")
     
     process = _get_process(name, source_config)
 
@@ -100,8 +98,7 @@ def dump(
         with open(Path(output_folder, f"{name}.yaml"), "w", encoding="utf-8") as yaml_file:
             yaml_file.write(dump_process(process))
     else:
-        print(f"[bold red]Error: The format: {format} is not valid. Valid formats are json or yaml.[/bold red]")
-        raise typer.Exit(code=1)
+        print_error_and_exit(f"The format: {format} is not valid. Valid formats are json or yaml.")
 
 @app.command()
 def load(
