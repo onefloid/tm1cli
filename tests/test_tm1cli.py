@@ -57,3 +57,16 @@ def test_process_clone_not_exists():
 
 def test_process_clone_sucess():
     ...
+
+def test_process_dump_invalid_format():
+    ...
+
+def test_process_dump_with_folder():
+    ...
+
+def test_process_dump_process_not_exists():
+    ...
+
+def test_process_dump_process_not_sucess():
+    ...
+
