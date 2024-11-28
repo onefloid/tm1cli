@@ -120,8 +120,7 @@ def load(
         with open(Path(input_folder, f"{name}.yaml"), "r", encoding="utf-8") as yaml_file:
             process = load_process(yaml_file.read())
     else:
-        print(f"[bold red]Error: The format: {format} is not valid. Valid formats are json or yaml.[/bold red]")
-        raise typer.Exit(code=1)
+        print_error_and_exit(f"The format: {format} is not valid. Valid formats are json or yaml.")
     
     with TM1Service(**database_config) as tm1:
         response = tm1.processes.update_or_create(process)
