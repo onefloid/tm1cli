@@ -8,7 +8,7 @@ from TM1py.Services import TM1Service
 from typing_extensions import Annotated
 
 from tm1cli.utils import resolve_database
-from tm1cli.Utils.tm1yaml import dump_process
+from tm1cli.Utils.tm1yaml import dump_process, load_process
 
 app = typer.Typer()
 
@@ -103,3 +103,33 @@ def dump(
         print(f"[bold red]Error: The format: {format} is not valid. Valid formats are json or yaml.[/bold red]")
         raise typer.Exit(code=1)
 
+@app.command()
+def load(
+    ctx: typer.Context,
+    name: str,
+    input_folder: Annotated[str, typer.Option("--folder", help="Specify the folder from where the file is loaded")],
+    format: Annotated[str, typer.Option("--format", help="Specify the input format")],
+    database: Annotated[
+        str, typer.Option("--database", "-d", help="Specify the database to use")
+    ] = None,
+):
+    """
+    Load a process from a file
+    """
+
+    database_config = resolve_database(ctx, database)
+
+    if format == "json": 
+        with open(Path(input_folder, f"{name}.json"), "r") as json_file:
+            process = Process.from_json(json_file.read())
+    elif format == "yaml":
+        with open(Path(input_folder, f"{name}.yaml"), "r", encoding="utf-8") as yaml_file:
+            process = load_process(yaml_file.read())
+    else:
+        print(f"[bold red]Error: The format: {format} is not valid. Valid formats are json or yaml.[/bold red]")
+        raise typer.Exit(code=1)
+    
+    with TM1Service(**database_config) as tm1:
+        response = tm1.processes.update_or_create(process)
+        if response.ok:
+            print(f"[bold green]Sucess: Process [italic]{name}[/italic] was loaded in TM1 Database![/bold green]")
