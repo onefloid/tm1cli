@@ -9,7 +9,8 @@ from TM1py import TM1Service
 from typing_extensions import Annotated
 
 import tm1cli.commands.process as process
-from tm1cli.utils import resolve_database
+from tm1cli.utils.cli_param import DATABASE_OPTION
+from tm1cli.utils.various import resolve_database
 
 console = Console()
 app = typer.Typer()
@@ -30,10 +31,11 @@ def main(ctx: typer.Context):
 @app.command()
 def tm1_version(
     ctx: typer.Context,
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None
+    database: Annotated[str, DATABASE_OPTION] = None
 ):
+    """
+    Shows the TM1 database version
+    """
     db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
         version = tm1.server.get_product_version()
@@ -42,10 +44,11 @@ def tm1_version(
 @app.command()
 def whoami(
     ctx: typer.Context,
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None
+    database: Annotated[str, DATABASE_OPTION] = None
 ):
+    """
+    Shows the currently logged in TM1 user
+    """
     with TM1Service(**resolve_database(ctx, database)) as tm1:
         user = tm1.security.get_current_user()
         print(user)
@@ -53,9 +56,7 @@ def whoami(
 @app.command()
 def threads(
     ctx: typer.Context,
-    database: Annotated[
-        str, typer.Option("--database", "-d", help="Specify the database to use")
-    ] = None,
+    database: Annotated[str, DATABASE_OPTION] = None,
     beautify: Annotated[
         bool,
         typer.Option(
@@ -63,6 +64,9 @@ def threads(
         ),
     ] = False,
 ):
+    """
+    Shows TM1 Database threads
+    """
     db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
         threads = tm1.sessions.get_threads_for_current()

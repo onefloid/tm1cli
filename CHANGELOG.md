@@ -1,4 +1,28 @@
-# v0.1.2 - 2024-11-25
+# Changelog
+
+## v0.1.3 - 2024-11-29
+
+### Features
+
+- New command: `process dump` a process as yaml or json file
+- New command: `process load` a process from a yaml or json file
+
+The yaml representation uses multi-line strings for the script
+sections to make it easy to version your dumps with Git in a 
+human-readable format.
+
+### Docs
+
+- Improved cli helptexts
+- Added beautiful badges in the readme file
+
+### Chore
+
+- Added license file
+- Various refactorings
+
+
+## v0.1.2 - 2024-11-25
 
 ### Features
 
@@ -11,10 +35,10 @@
 
 ### Chore
 
-- Added repository url to pyproject.toml
-- Improved test coverage
+- Various refactorings
+- Improved docs
 
-# v0.1.1 - 2024-11-24
+## v0.1.1 - 2024-11-24
 
 ### Features
 

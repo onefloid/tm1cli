@@ -1,5 +1,8 @@
 # TM1-CLI
 
+![PyPI - License](https://img.shields.io/pypi/l/tm1cli)
+![PyPI - Version](https://img.shields.io/pypi/v/tm1cli)
+
 **TM1-CLI** is a command-line interface (CLI) tool to interact with TM1 servers using [TM1py](https://github.com/cubewise-code/tm1py).
 
 ---
@@ -45,6 +48,8 @@ tm1cli whoami
 tm1cli process list
 tm1cli process exists <process_name>
 tm1cli process clone --from <source_db> --to <target_db>
+tm1cli process dump <name> --folder <path> --format <json|yaml>
+tm1cli process load <name> --folder <path> --format <json|yaml>
 ```
 
 ### All Available Commands
