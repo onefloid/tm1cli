@@ -15,5 +15,8 @@ def resolve_database(ctx: typer.Context, database_name: str) -> dict:
     return configs[database_name]
 
 def print_error_and_exit(msg: str) -> None:
+    """
+    Prints an error to STDOUT and exits the script with error code 1. 
+    """
     print(f"[bold red]Error: {msg} [/bold red]")
     raise typer.Exit(code=1)

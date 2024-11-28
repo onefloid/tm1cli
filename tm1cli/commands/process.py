@@ -28,7 +28,7 @@ def list(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Show if process exists
+    Shows a process list
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
@@ -42,7 +42,7 @@ def exists(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Show if process exists
+    Shows if process exists
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
@@ -60,6 +60,9 @@ def clone(
     ] =None,
 
 ):
+    """
+    Clones a process from one database to another database
+    """
     source_config = resolve_database(ctx, source_database)
     target_config = resolve_database(ctx, target_database)
     if source_config == target_config:
@@ -81,7 +84,7 @@ def dump(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Dumps a process to a file
+    Dumps a process from a TM1 database to a file
     """
 
     database_config = resolve_database(ctx, database)
@@ -105,7 +108,7 @@ def load(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Load a process from a file
+    Loads a process from a file into a TM1 database
     """
 
     database_config = resolve_database(ctx, database)

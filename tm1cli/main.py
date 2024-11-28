@@ -33,6 +33,9 @@ def tm1_version(
     ctx: typer.Context,
     database: Annotated[str, DATABASE_OPTION] = None
 ):
+    """
+    Shows the TM1 database version
+    """
     db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
         version = tm1.server.get_product_version()
@@ -43,6 +46,9 @@ def whoami(
     ctx: typer.Context,
     database: Annotated[str, DATABASE_OPTION] = None
 ):
+    """
+    Shows the currently logged in TM1 user
+    """
     with TM1Service(**resolve_database(ctx, database)) as tm1:
         user = tm1.security.get_current_user()
         print(user)
@@ -58,6 +64,9 @@ def threads(
         ),
     ] = False,
 ):
+    """
+    Shows TM1 Database threads
+    """
     db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
         threads = tm1.sessions.get_threads_for_current()
