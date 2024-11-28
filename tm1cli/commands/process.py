@@ -79,8 +79,8 @@ def clone(
 def dump(
     ctx: typer.Context,
     name: str,
-    output_folder: Annotated[str, typer.Option("--folder", help="Specify the file where the process is dumped to")],
-    format: Annotated[str, typer.Option("--format", help="Specify the output format of ")],
+    output_folder: Annotated[str, typer.Option("--folder", help="Specify the file where the process is dumped to")] = ".",
+    format: Annotated[str, typer.Option("--format", help="Specify the output format of ")] = "yaml",
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
@@ -103,8 +103,8 @@ def dump(
 def load(
     ctx: typer.Context,
     name: str,
-    input_folder: Annotated[str, typer.Option("--folder", help="Specify the folder from where the file is loaded")],
-    format: Annotated[str, typer.Option("--format", help="Specify the input format")],
+    input_folder: Annotated[str, typer.Option("--folder", help="Specify the folder from where the file is loaded")] = ".",
+    format: Annotated[str, typer.Option("--format", help="Specify the input format")] = "yaml",
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
