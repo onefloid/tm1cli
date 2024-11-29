@@ -8,15 +8,16 @@ from rich.table import Table
 from TM1py import TM1Service
 from typing_extensions import Annotated
 
-import tm1cli.commands.cube as cube
-import tm1cli.commands.process as process
+import tm1cli.commands as commands
 from tm1cli.utils.cli_param import DATABASE_OPTION
 from tm1cli.utils.various import resolve_database
 
 console = Console()
 app = typer.Typer()
-app.add_typer(process.app, name="process")
-app.add_typer(cube.app, name="cube")
+
+modules = [("process", commands.process), ("cube", commands.cube)]
+for name, module in modules:
+    app.add_typer(module.app, name=name)
 
 @app.callback()
 def main(ctx: typer.Context):
