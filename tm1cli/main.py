@@ -15,7 +15,7 @@ from tm1cli.utils.various import resolve_database
 console = Console()
 app = typer.Typer()
 
-modules = [("process", commands.process), ("cube", commands.cube)]
+modules = [("process", commands.process), ("cube", commands.cube), ("view", commands.view)]
 for name, module in modules:
     app.add_typer(module.app, name=name)
 
