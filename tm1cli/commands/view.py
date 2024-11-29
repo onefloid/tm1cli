@@ -9,6 +9,7 @@ from tm1cli.utils.various import resolve_database
 
 app = typer.Typer()
 
+
 @app.command(name="ls", help="Alias for list")
 @app.command()
 def list(
