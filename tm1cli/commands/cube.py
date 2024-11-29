@@ -1,7 +1,7 @@
 from typing import Annotated
 
 import typer
-from rich import print
+from rich import print  # pylint: disable=redefined-builtin
 from TM1py.Services import TM1Service
 
 from tm1cli.utils.cli_param import DATABASE_OPTION
@@ -11,8 +11,8 @@ app = typer.Typer()
 
 
 @app.command(name="ls", help="Alias for list")
-@app.command()
-def list(
+@app.command(name="list")
+def list_cube(
     ctx: typer.Context,
     database: Annotated[str, DATABASE_OPTION] = None,
     skip_control_cubes: Annotated[
@@ -29,4 +29,5 @@ def list(
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
-        [print(cube) for cube in tm1.cubes.get_all_names(skip_control_cubes)]
+        for cube in tm1.cubes.get_all_names(skip_control_cubes):
+            print(cube)

@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 import typer
-from rich import print
+from rich import print  # pylint: disable=redefined-builtin
 from TM1py.Objects import Process
 from TM1py.Services import TM1Service
 from typing_extensions import Annotated
@@ -23,8 +23,8 @@ def _get_process(name: str, database_config: dict) -> Process:
 
 
 @app.command(name="ls", help="Alias for list")
-@app.command()
-def list(
+@app.command(name="list")
+def list_process(
     ctx: typer.Context,
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
@@ -33,7 +33,8 @@ def list(
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
-        [print(process) for process in tm1.processes.get_all_names()]
+        for process in tm1.processes.get_all_names():
+            print(process)
 
 
 @app.command()
@@ -96,7 +97,7 @@ def dump(
             "--folder", help="Specify the file where the process is dumped to"
         ),
     ] = ".",
-    format: Annotated[
+    dump_format: Annotated[
         str, typer.Option("--format", help="Specify the output format of ")
     ] = "yaml",
     database: Annotated[str, DATABASE_OPTION] = None,
@@ -108,17 +109,19 @@ def dump(
     database_config = resolve_database(ctx, database)
     process = _get_process(name, database_config)
 
-    if format == "json":
-        with open(Path(output_folder, f"{name}.json"), "w") as json_file:
+    if dump_format == "json":
+        with open(
+            Path(output_folder, f"{name}.json"), "w", encoding="utf-8"
+        ) as json_file:
             json.dump(json.loads(process.body), json_file, indent=4)
-    elif format == "yaml":
+    elif dump_format == "yaml":
         with open(
             Path(output_folder, f"{name}.yaml"), "w", encoding="utf-8"
         ) as yaml_file:
             yaml_file.write(dump_process(process))
     else:
         print_error_and_exit(
-            f"The format: {format} is not valid. Valid formats are json or yaml."
+            f"The format: {dump_format} is not valid. Valid formats are json or yaml."
         )
 
 
@@ -133,7 +136,7 @@ def load(
             "--folder", help="Specify the folder from where the file is loaded"
         ),
     ] = ".",
-    format: Annotated[
+    load_format: Annotated[
         str, typer.Option("--format", help="Specify the input format")
     ] = "yaml",
     database: Annotated[str, DATABASE_OPTION] = None,
@@ -144,21 +147,23 @@ def load(
 
     database_config = resolve_database(ctx, database)
 
-    if format == "json":
-        with open(Path(input_folder, f"{name}.json"), "r") as json_file:
+    if load_format == "json":
+        with open(
+            Path(input_folder, f"{name}.json"), "r", encoding="utf-8"
+        ) as json_file:
             process = Process.from_json(json_file.read())
-    elif format == "yaml":
+    elif load_format == "yaml":
         with open(
             Path(input_folder, f"{name}.yaml"), "r", encoding="utf-8"
         ) as yaml_file:
             process = load_process(yaml_file.read())
     else:
         print_error_and_exit(
-            f"The format: {format} is not valid. Valid formats are json or yaml."
+            f"The format: {load_format} is not valid. Valid formats are json or yaml."
         )
 
     with TM1Service(**database_config) as tm1:
-        response = tm1.processes.update_or_create(process)
+        response = tm1.processes.update_or_create(process)  # pylint: disable=E0606
         if response.ok:
             print(
                 f"[bold green]Sucess: Process [italic]{name}[/italic] was loaded in TM1 Database![/bold green]"
