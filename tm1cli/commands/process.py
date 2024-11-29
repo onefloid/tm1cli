@@ -28,7 +28,7 @@ def list(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Shows a process list
+    List processes
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
