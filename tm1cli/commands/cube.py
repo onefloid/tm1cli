@@ -15,10 +15,18 @@ app = typer.Typer()
 def list(
     ctx: typer.Context,
     database: Annotated[str, DATABASE_OPTION] = None,
+    skip_control_cubes: Annotated[
+        bool,
+        typer.Option(
+            "-s",
+            "--skip-control-cubes",
+            help="Flag for not printing control cubes.",
+        ),
+    ] = False,
 ):
     """
     List cubes
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
-        [print(cube) for cube in tm1.cubes.get_all_names()]
+        [print(cube) for cube in tm1.cubes.get_all_names(skip_control_cubes)]
