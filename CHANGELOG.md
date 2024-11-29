@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.1.4 - 2024-11-29
+
+### Features
+
+- New command: `cube list`
+- New command: `view list`
+
+### Fix
+
+- Fix case error in _**u**til_ folder
+
+### Chore
+
+- Added CI Job for linting
+- Added CI Job for publishing to pypi
+- Autoformat files
+- Fix linting errors
+
 ## v0.1.3 - 2024-11-29
 
 ### Features
