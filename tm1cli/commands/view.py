@@ -24,3 +24,21 @@ def list_view(
     with TM1Service(**resolve_database(ctx, database)) as tm1:
         for view in tm1.views.get_all_names(cube_name):
             print(view)
+
+
+@app.command()
+def exists(
+    ctx: typer.Context,
+    cube_name: str,
+    view_name: str,
+    is_private: Annotated[
+        bool, typer.Option("-p", "--private", help="Flag to specify if view is private")
+    ] = False,
+    database: Annotated[str, DATABASE_OPTION] = None,
+):
+    """
+    Exists view
+    """
+
+    with TM1Service(**resolve_database(ctx, database)) as tm1:
+        print(tm1.views.exists(cube_name, view_name, is_private))
