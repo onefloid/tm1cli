@@ -2,8 +2,13 @@ from TM1py import Process
 
 
 class MockedCubeService:
+    cubes = ["Cube1", "Cube2"]
+
     def get_all_names(self, cube_name: str):
-        return ["Cube1", "Cube2"]
+        return self.cubes
+
+    def exists(self, cube_name: str):
+        return cube_name in self.cubes
 
 
 class MockedViewService:

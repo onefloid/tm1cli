@@ -31,3 +31,16 @@ def list_cube(
     with TM1Service(**resolve_database(ctx, database)) as tm1:
         for cube in tm1.cubes.get_all_names(skip_control_cubes):
             print(cube)
+
+
+@app.command()
+def exists(
+    ctx: typer.Context,
+    cube_name: str,
+    database: Annotated[str, DATABASE_OPTION] = None,
+):
+    """
+    Check if cube exists
+    """
+    with TM1Service(**resolve_database(ctx, database)) as tm1:
+        print(tm1.cubes.exists(cube_name))
