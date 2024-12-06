@@ -1,6 +1,11 @@
 from TM1py import Process
 
 
+class MockedCubeService:
+    def get_all_names(self, cube_name: str):
+        return ["Cube1", "Cube2"]
+
+
 class MockedViewService:
 
     def get_all_names(self, cube_name: str):
@@ -28,6 +33,7 @@ class MockedTM1Service:
     def __init__(self, **kwargs) -> None:
         self.views = MockedViewService()
         self.processes = MockedProcessService()
+        self.cubes = MockedCubeService()
 
     def __enter__(self):
         """
