@@ -37,7 +37,7 @@ def exists(
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Exists view
+    Check if view exists
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
