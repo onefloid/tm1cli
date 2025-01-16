@@ -40,8 +40,8 @@ def exists(
     ctx: typer.Context,
     dimension_name: str,
     database: Annotated[str, DATABASE_OPTION] = None,
-    watch: Annotated[bool, WATCH_OPTION] = False,
-    interval: Annotated[int, INTERVAL_OPTION] = 5,
+    watch: Annotated[bool, WATCH_OPTION] = False,  # pylint: disable=unused-argument
+    interval: Annotated[int, INTERVAL_OPTION] = 5,  # pylint: disable=unused-argument
 ):
     """
     Check if dimension exists

@@ -44,7 +44,7 @@ def exists(
     ctx: typer.Context,
     name: str,
     database: Annotated[str, DATABASE_OPTION] = None,
-    watch: Annotated[bool, WATCH_OPTION] = False,
+    watch: Annotated[bool, WATCH_OPTION] = False,  # pylint: disable=unused-argument
     interval: Annotated[int, INTERVAL_OPTION] = 5,
 ):
     """
