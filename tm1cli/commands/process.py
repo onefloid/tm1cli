@@ -7,9 +7,10 @@ from TM1py.Objects import Process
 from TM1py.Services import TM1Service
 from typing_extensions import Annotated
 
-from tm1cli.utils.cli_param import DATABASE_OPTION
+from tm1cli.utils.cli_param import DATABASE_OPTION, INTERVAL_OPTION, WATCH_OPTION
 from tm1cli.utils.tm1yaml import dump_process, load_process
 from tm1cli.utils.various import print_error_and_exit, resolve_database
+from tm1cli.utils.watch import watch_option
 
 app = typer.Typer()
 
@@ -38,10 +39,13 @@ def list_process(
 
 
 @app.command()
+@watch_option
 def exists(
     ctx: typer.Context,
     name: str,
     database: Annotated[str, DATABASE_OPTION] = None,
+    watch: Annotated[bool, WATCH_OPTION] = False,  # pylint: disable=unused-argument
+    interval: Annotated[int, INTERVAL_OPTION] = 5,  # pylint: disable=unused-argument
 ):
     """
     Shows if process exists

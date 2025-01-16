@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.6 - 2025-16-01
+
+### Features
+
+- New watch option for exists command, e.g: `cube exists <cube_name> --watch`
+
 ## v0.1.5 - 2025-16-01
 
 ### Features
