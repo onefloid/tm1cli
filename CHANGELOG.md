@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.5 - 2025-16-01
+
+### Features
+
+- New command: `cube exists`
+- New command: `view exists`
+- New command: `dimension list`
+- New command: `dimension exists`
+- New command: `subset list`
+- New command: `subset exists`
+
+
+### Chore
+
+- Improved testing
+
 ## v0.1.4 - 2024-11-29
 
 ### Features

@@ -23,6 +23,28 @@ class MockedViewService:
             return True
 
 
+class MockedDimensionService:
+    def get_all_names(self, skip_control_dims: bool):
+        return ["Dimension1", "Dimension2", "Dimension3"]
+
+    def exists(self, dimension_name: str):
+        if "not" in dimension_name.lower():
+            return False
+        else:
+            return True
+
+
+class MockedSubsetService:
+    def get_all_names(self, dimension_name: str):
+        return ["Subset1", "Subset2", "Subset3"]
+
+    def exists(self, dimension_name: str, subset_name: str, private: bool):
+        if "not" in subset_name.lower():
+            return False
+        else:
+            return True
+
+
 class MockedProcessService:
     def exists(self, process_name: str):
         return False if "not" in process_name else True
@@ -39,6 +61,8 @@ class MockedTM1Service:
         self.views = MockedViewService()
         self.processes = MockedProcessService()
         self.cubes = MockedCubeService()
+        self.dimensions = MockedDimensionService()
+        self.subsets = MockedSubsetService()
 
     def __enter__(self):
         """
