@@ -52,10 +52,10 @@ tm1cli process dump <name> --folder <path> --format <json|yaml>
 tm1cli process load <name> --folder <path> --format <json|yaml>
 
 tm1cli cube list
-tm1cli cube exists <cube_name>
+tm1cli cube exists <cube_name> --watch
 
 tm1cli dimension list
-tm1cli dimension exists <dimension_name>
+tm1cli dimension exists <dimension_name> -w
 
 tm1cli view list <cube_name>
 tm1cli view exists <cube_name> <view_name>
