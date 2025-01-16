@@ -3,18 +3,30 @@ from typer.testing import CliRunner
 
 from tm1cli.main import app
 
+from .conftest import MockedTM1Service
+
 runner = CliRunner()
 
 
-@pytest.mark.parametrize("command", ["list", "ls"])
-def test_cube_list(command):
-    result = runner.invoke(
-        app,
-        [
-            "view",
-            command,
-            "TM1py_tests_annotations_0f680909_74b1_11ef_b4ba_546ceb97bbfb",
-        ],
-    )
+@pytest.mark.parametrize(
+    "options",
+    [("not", "", "False"), ("example", "-p", "True"), ("not", "--private", "False")],
+)
+def test_view_exists(mocker, options):
+    mocker.patch("tm1cli.commands.view.TM1Service", MockedTM1Service)
+    if options[1]:
+        result = runner.invoke(app, ["view", "exists", "example_cube", options[0]])
+    else:
+        result = runner.invoke(app, ["view", "exists", "example_cube", options[:1]])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
+    assert result.stdout == f"{options[2]}\n"
+
+
+def test_view_list(mocker):
+    mocker.patch("tm1cli.commands.view.TM1Service", MockedTM1Service)
+    result = runner.invoke(app, ["view", "list", "example_cube"])
+
+    assert result.exit_code == 0
+    assert isinstance(result.stdout, str)
+    assert result.stdout == "View1\nView2\nView3\n"

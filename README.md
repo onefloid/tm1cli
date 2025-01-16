@@ -52,8 +52,16 @@ tm1cli process dump <name> --folder <path> --format <json|yaml>
 tm1cli process load <name> --folder <path> --format <json|yaml>
 
 tm1cli cube list
+tm1cli cube exists <cube_name>
+
+tm1cli dimension list
+tm1cli dimension exists <dimension_name>
 
 tm1cli view list <cube_name>
+tm1cli view exists <cube_name> <view_name>
+
+tm1cli subset list <dimension_name>
+tm1cli subset exists <dimension_name> <subset_name>
 ```
 
 ### All Available Commands

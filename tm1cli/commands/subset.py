@@ -12,35 +12,34 @@ app = typer.Typer()
 
 @app.command(name="ls", help="Alias for list")
 @app.command(name="list")
-def list_cube(
+def list_subset(
     ctx: typer.Context,
+    dimension_name: str,
+    # hierarchy_name: str = None,
     database: Annotated[str, DATABASE_OPTION] = None,
-    skip_control_cubes: Annotated[
-        bool,
-        typer.Option(
-            "-s",
-            "--skip-control-cubes",
-            help="Flag for not printing control cubes.",
-        ),
-    ] = False,
 ):
     """
-    List cubes
+    List subsets
     """
 
     with TM1Service(**resolve_database(ctx, database)) as tm1:
-        for cube in tm1.cubes.get_all_names(skip_control_cubes):
-            print(cube)
+        for subset in tm1.subsets.get_all_names(dimension_name):
+            print(subset)
 
 
 @app.command()
 def exists(
     ctx: typer.Context,
-    cube_name: str,
+    dimension_name: str,
+    subset_name: str,
+    is_private: Annotated[
+        bool, typer.Option("-p", "--private", help="Flag to specify if view is private")
+    ] = False,
     database: Annotated[str, DATABASE_OPTION] = None,
 ):
     """
-    Check if cube exists
+    Check if subset exists
     """
+
     with TM1Service(**resolve_database(ctx, database)) as tm1:
-        print(tm1.cubes.exists(cube_name))
+        print(tm1.views.exists(dimension_name, subset_name, is_private))

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tm1cli"
-version = "0.1.4"
+version = "0.1.5"
 description = "A command-line interface (CLI) tool for interacting with TM1 servers using TM1py."
 authors = ["onefloid <onefloid@gmx.de>"]
 license = "MIT License"
@@ -17,6 +17,7 @@ pyyaml = "^6.0.2"
 isort = "^5.13.2"
 pytest = "^8.3.3"
 pylint = "^3.3.1"
+pytest-mock = "^3.14.0"
 
 [tool.poetry.scripts]
 tm1cli = "tm1cli.main:app"

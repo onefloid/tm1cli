@@ -19,6 +19,8 @@ modules = [
     ("process", commands.process),
     ("cube", commands.cube),
     ("view", commands.view),
+    ("dimension", commands.dimension),
+    ("subset", commands.subset),
 ]
 for name, module in modules:
     app.add_typer(module.app, name=name)
