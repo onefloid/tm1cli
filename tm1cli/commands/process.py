@@ -45,7 +45,7 @@ def exists(
     name: str,
     database: Annotated[str, DATABASE_OPTION] = None,
     watch: Annotated[bool, WATCH_OPTION] = False,  # pylint: disable=unused-argument
-    interval: Annotated[int, INTERVAL_OPTION] = 5,
+    interval: Annotated[int, INTERVAL_OPTION] = 5,  # pylint: disable=unused-argument
 ):
     """
     Shows if process exists
