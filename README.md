@@ -24,13 +24,15 @@ Install the package directly from PyPI:
 pip install tm1cli
 ```
 
-### Using Poetry
+### Develop locally on linux
 
 Clone the repository and install using Poetry
 
 ```bash
 git clone https://github.com/onefloid/tm1cli.git
 cd tm1cli
+python -m venv .venv
+source .source .venv/bin/activate
 poetry install
 ```
 
