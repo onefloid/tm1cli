@@ -1,5 +1,7 @@
+import os
 import json
 
+import importlib.metadata
 import typer
 import yaml
 from rich import print
@@ -11,6 +13,7 @@ from typing_extensions import Annotated
 import tm1cli.commands as commands
 from tm1cli.utils.cli_param import DATABASE_OPTION
 from tm1cli.utils.various import resolve_database
+
 
 console = Console()
 app = typer.Typer()
@@ -32,14 +35,24 @@ def main(ctx: typer.Context):
     CLI tool to interact with TM1 using TM1py.
     """
 
-    with open("databases.yaml", "r") as file:
-        databases = yaml.safe_load(file)["databases"]
-        configs = {
-            db["name"]: {key: value for key, value in db.items() if key != "name"}
-            for db in databases
-        }
-        default_db_config = databases[0]
-        ctx.obj = {"configs": configs, "default_db_config": default_db_config}
+    if os.path.exists("databases.yaml"):
+        with open("databases.yaml", "r") as file:
+            databases = yaml.safe_load(file)["databases"]
+            configs = {
+                db["name"]: {key: value for key, value in db.items() if key != "name"}
+                for db in databases
+            }
+            default_db_config = databases[0]
+            ctx.obj = {"configs": configs, "default_db_config": default_db_config}
+
+
+@app.command()
+def version():
+    """
+    Shows the tm1cli version
+    """
+    version_string = importlib.metadata.version("tm1cli")
+    print(version_string)
 
 
 @app.command()
@@ -49,8 +62,8 @@ def tm1_version(ctx: typer.Context, database: Annotated[str, DATABASE_OPTION] = 
     """
     db_config = resolve_database(ctx, database)
     with TM1Service(**db_config) as tm1:
-        version = tm1.server.get_product_version()
-        print(version)
+        tm1_version_string = tm1.server.get_product_version()
+        print(tm1_version_string)
 
 
 @app.command()
