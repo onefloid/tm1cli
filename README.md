@@ -94,3 +94,17 @@ databases:
     user: admin
     password: apple
 ```
+
+If no `databases.yaml` file is found, **tm1cli** will look for environment variables starting with `TM1_` and use them as the default database configuration.
+
+For example, if you set the following environment variables, **tm1cli** will use them and will work just like in the configuration file example above:
+
+```bash
+  export TM1_ADDRESS=localhost
+  export TM1_PORT=10001
+  export TM1_SSL=false
+  export TM1_USER=admin
+  export TM1_PASSWORD=""
+```
+
+> **Notice:** The `clone` command and the `--database` option are only supported with a `databases.yaml` file.

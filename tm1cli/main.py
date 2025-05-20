@@ -44,6 +44,13 @@ def main(ctx: typer.Context):
             }
             default_db_config = databases[0]
             ctx.obj = {"configs": configs, "default_db_config": default_db_config}
+    else:
+        default_db_config = {
+            key.replace("TM1_", "").lower(): value
+            for key, value in os.environ.items()
+            if key.startswith("TM1")
+        }
+        ctx.obj = {"configs": {}, "default_db_config": default_db_config}
 
 
 @app.command()
