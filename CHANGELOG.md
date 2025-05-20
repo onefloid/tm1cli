@@ -1,12 +1,23 @@
 # Changelog
 
-## v0.1.6 - 2025-16-01
+## v0.1.7 - 2025-05-20
+
+### Features
+
+- New command: `version` for tm1cli version
+- Support `TM1_` environment variables as alternative to config file `database.yaml`
+
+### Docs
+
+- Minor improvements in the readme
+
+## v0.1.6 - 2025-01-16
 
 ### Features
 
 - New watch option for exists command, e.g: `cube exists <cube_name> --watch`
 
-## v0.1.5 - 2025-16-01
+## v0.1.5 - 2025-01-16
 
 ### Features
 
