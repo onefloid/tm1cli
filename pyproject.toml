@@ -9,15 +9,15 @@ repository = "https://github.com/onefloid/tm1cli"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-TM1py = "^2.0.4"
-typer = "^0.13.1"
-pyyaml = "^6.0.2"
+TM1py = ">=2.0.4"
+typer = ">=0.9.3"
+pyyaml = ">=5.4"
 
 [tool.poetry.group.dev.dependencies]
-isort = "^5.13.2"
-pytest = "^8.3.3"
-pylint = "^3.3.1"
-pytest-mock = "^3.14.0"
+isort = ">=5.13.2"
+pytest = ">=8.3.3"
+pylint = ">=3.3.1"
+pytest-mock = ">=3.14.0"
 
 [tool.poetry.scripts]
 tm1cli = "tm1cli.main:app"
