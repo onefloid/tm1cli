@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.2.0 - 2026-07-15
+
+### Features
+
+- `exists` commands (`cube`, `dimension`, `process`, `subset`, `view`) now print a
+  human-readable result (`✅ Cube exists!` / `❌ Cube does not exist!`) by default,
+  via a new shared `execute_exists()` helper.
+- New global `--output-raw` flag to get the old raw `True`/`False` output back, e.g.
+  for scripting.
+
+### Breaking changes
+
+- Default stdout of `tm1cli <resource> exists ...` is no longer `True`/`False`.
+  Scripts relying on the raw boolean output must add `--output-raw`.
+
 ## v0.1.7 - 2025-05-20
 
 ### Features
