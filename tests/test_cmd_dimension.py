@@ -16,9 +16,16 @@ def test_dimension_list(mocker, command):
     assert result.stdout == "Dimension1\nDimension2\nDimension3\n"
 
 
-def test_dimension_exists(mocker):
-    mocker.patch("tm1cli.commands.dimension.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["dimension", "exists", "Dimension1"])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [(None, "✅ Dimension exists!\n"), ("--output-raw", "True\n")],
+)
+def test_dimension_exists(mocker, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    if raw_option:
+        result = runner.invoke(app, [raw_option, "dimension", "exists", "Dimension1"])
+    else:
+        result = runner.invoke(app, ["dimension", "exists", "Dimension1"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "True\n"
+    assert result.stdout == expected_output

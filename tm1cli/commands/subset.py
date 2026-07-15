@@ -5,6 +5,7 @@ from rich import print  # pylint: disable=redefined-builtin
 from TM1py.Services import TM1Service
 
 from tm1cli.utils.cli_param import DATABASE_OPTION, INTERVAL_OPTION, WATCH_OPTION
+from tm1cli.utils.generic import execute_exists
 from tm1cli.utils.various import resolve_database
 from tm1cli.utils.watch import watch_option
 
@@ -45,5 +46,11 @@ def exists(
     Check if subset exists
     """
 
-    with TM1Service(**resolve_database(ctx, database)) as tm1:
-        print(tm1.views.exists(dimension_name, subset_name, is_private))
+    execute_exists(
+        "subsets",
+        ctx,
+        database,
+        dimension_name=dimension_name,
+        subset_name=subset_name,
+        private=is_private,
+    )

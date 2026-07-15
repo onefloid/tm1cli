@@ -1,19 +1,18 @@
-import os
-import json
-
 import importlib.metadata
+import json
+import os
+from typing import Annotated
+
 import typer
 import yaml
-from rich import print
+from rich import print  # pylint: disable=redefined-builtin
 from rich.console import Console
 from rich.table import Table
 from TM1py import TM1Service
-from typing_extensions import Annotated
 
 import tm1cli.commands as commands
 from tm1cli.utils.cli_param import DATABASE_OPTION
 from tm1cli.utils.various import resolve_database
-
 
 console = Console()
 app = typer.Typer()
@@ -30,7 +29,13 @@ for name, module in modules:
 
 
 @app.callback()
-def main(ctx: typer.Context):
+def main(
+    ctx: typer.Context,
+    raw: Annotated[
+        bool,
+        typer.Option("--output-raw", help="Raw output without formatting"),
+    ] = False,
+):
     """
     CLI tool to interact with TM1 using TM1py.
     """
@@ -51,6 +56,8 @@ def main(ctx: typer.Context):
             if key.startswith("TM1")
         }
         ctx.obj = {"configs": {}, "default_db_config": default_db_config}
+
+    ctx.obj["raw"] = raw
 
 
 @app.command()

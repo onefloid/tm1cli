@@ -16,9 +16,16 @@ def test_cube_list(mocker, command):
     assert result.stdout == "Cube1\nCube2\n"
 
 
-def test_cube_exists(mocker):
-    mocker.patch("tm1cli.commands.cube.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["cube", "exists", "Cube1"])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [(None, "✅ Cube exists!\n"), ("--output-raw", "True\n")],
+)
+def test_cube_exists(mocker, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    if raw_option:
+        result = runner.invoke(app, [raw_option, "cube", "exists", "Cube1"])
+    else:
+        result = runner.invoke(app, ["cube", "exists", "Cube1"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "True\n"
+    assert result.stdout == expected_output

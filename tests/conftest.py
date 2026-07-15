@@ -46,8 +46,8 @@ class MockedSubsetService:
 
 
 class MockedProcessService:
-    def exists(self, process_name: str):
-        return False if "not" in process_name else True
+    def exists(self, name: str):
+        return False if "not" in name else True
 
     def get(self, process_name: str):
         return Process(process_name)

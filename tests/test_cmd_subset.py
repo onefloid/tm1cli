@@ -16,9 +16,18 @@ def test_subset_list(mocker, command):
     assert result.stdout == "Subset1\nSubset2\nSubset3\n"
 
 
-def test_subset_exists(mocker):
-    mocker.patch("tm1cli.commands.subset.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["subset", "exists", "Dimension1", "Subset1"])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [(None, "✅ Subset exists!\n"), ("--output-raw", "True\n")],
+)
+def test_subset_exists(mocker, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    if raw_option:
+        result = runner.invoke(
+            app, [raw_option, "subset", "exists", "Dimension1", "Subset1"]
+        )
+    else:
+        result = runner.invoke(app, ["subset", "exists", "Dimension1", "Subset1"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "True\n"
+    assert result.stdout == expected_output

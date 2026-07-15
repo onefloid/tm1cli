@@ -74,6 +74,16 @@ Run the following to see all available commands:
 tm1cli --help
 ```
 
+### Output formatting
+
+By default, `exists` commands print a human-readable result, e.g. `✅ Cube exists!`.
+Pass the global `--output-raw` flag before the command to get the raw `True`/`False`
+value instead, e.g. for scripting:
+
+```bash
+tm1cli --output-raw cube exists <cube_name>
+```
+
 ### Configuration
 
 Connection settings are stored in a _databases.yaml_ file. Here's an example:
