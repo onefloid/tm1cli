@@ -9,18 +9,25 @@ runner = CliRunner()
 
 
 @pytest.mark.parametrize(
-    "options",
-    [("not", "", "False"), ("example", "-p", "True"), ("not", "--private", "False")],
+    "view_name,private_flag,exists_result",
+    [("not", "", False), ("example", "-p", True), ("not", "--private", False)],
 )
-def test_view_exists(mocker, options):
-    mocker.patch("tm1cli.commands.view.TM1Service", MockedTM1Service)
-    if options[1]:
-        result = runner.invoke(app, ["view", "exists", "example_cube", options[0]])
-    else:
-        result = runner.invoke(app, ["view", "exists", "example_cube", options[:1]])
+@pytest.mark.parametrize("raw_option", [None, "--output-raw"])
+def test_view_exists(mocker, view_name, private_flag, exists_result, raw_option):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    args = [raw_option] if raw_option else []
+    args += ["view", "exists", "example_cube", view_name]
+    if private_flag:
+        args.append(private_flag)
+    result = runner.invoke(app, args)
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == f"{options[2]}\n"
+    if raw_option:
+        assert result.stdout == f"{exists_result}\n"
+    else:
+        icon = "✅" if exists_result else "❌"
+        word = "exists" if exists_result else "does not exist"
+        assert result.stdout == f"{icon} View {word}!\n"
 
 
 def test_view_list(mocker):

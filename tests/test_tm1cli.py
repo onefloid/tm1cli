@@ -45,7 +45,7 @@ def test_process_list(command):
 
 
 def test_process_exists():
-    result = runner.invoke(app, ["process", "exists", "example"])
+    result = runner.invoke(app, ["--output-raw", "process", "exists", "example"])
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
     assert result.stdout == "True\n" or result.stdout == "False\n"
