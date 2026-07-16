@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.2.1 - 2026-07-15
+
+### Features
+
+- `list` commands (`cube`, `dimension`, `process`, `subset`, `view`) now print each
+  item as a `-` bullet by default, via a new shared `generic_list()` helper.
+- `--output-raw` now also applies to `list` commands, printing the old plain,
+  one-item-per-line output.
+
+### Breaking changes
+
+- Default stdout of `tm1cli <resource> list` (and its `ls` alias) is no longer plain
+  one-item-per-line output. Scripts relying on that must add `--output-raw`.
+
 ## v0.2.0 - 2026-07-15
 
 ### Features

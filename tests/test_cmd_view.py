@@ -30,10 +30,19 @@ def test_view_exists(mocker, view_name, private_flag, exists_result, raw_option)
         assert result.stdout == f"{icon} View {word}!\n"
 
 
-def test_view_list(mocker):
-    mocker.patch("tm1cli.commands.view.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["view", "list", "example_cube"])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [
+        (None, "- View1\n- View2\n- View3\n"),
+        ("--output-raw", "View1\nView2\nView3\n"),
+    ],
+)
+def test_view_list(mocker, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    args = [raw_option] if raw_option else []
+    args += ["view", "list", "example_cube"]
+    result = runner.invoke(app, args)
 
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "View1\nView2\nView3\n"
+    assert result.stdout == expected_output

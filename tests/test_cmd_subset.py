@@ -8,12 +8,21 @@ runner = CliRunner()
 
 
 @pytest.mark.parametrize("command", ["list", "ls"])
-def test_subset_list(mocker, command):
-    mocker.patch("tm1cli.commands.subset.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["subset", command, "Dimension1"])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [
+        (None, "- Subset1\n- Subset2\n- Subset3\n"),
+        ("--output-raw", "Subset1\nSubset2\nSubset3\n"),
+    ],
+)
+def test_subset_list(mocker, command, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    args = [raw_option] if raw_option else []
+    args += ["subset", command, "Dimension1"]
+    result = runner.invoke(app, args)
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "Subset1\nSubset2\nSubset3\n"
+    assert result.stdout == expected_output
 
 
 @pytest.mark.parametrize(

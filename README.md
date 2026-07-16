@@ -76,12 +76,14 @@ tm1cli --help
 
 ### Output formatting
 
-By default, `exists` commands print a human-readable result, e.g. `✅ Cube exists!`.
-Pass the global `--output-raw` flag before the command to get the raw `True`/`False`
-value instead, e.g. for scripting:
+By default, `exists` commands print a human-readable result, e.g. `✅ Cube exists!`,
+and `list` commands print each item as a `-` bullet, e.g. `- Cube1`. Pass the global
+`--output-raw` flag before the command to get the raw `True`/`False` or plain,
+one-item-per-line output instead, e.g. for scripting:
 
 ```bash
 tm1cli --output-raw cube exists <cube_name>
+tm1cli --output-raw cube list
 ```
 
 ### Configuration

@@ -8,7 +8,7 @@ from TM1py.Objects import Process
 from TM1py.Services import TM1Service
 
 from tm1cli.utils.cli_param import DATABASE_OPTION, INTERVAL_OPTION, WATCH_OPTION
-from tm1cli.utils.generic import execute_exists
+from tm1cli.utils.generic import execute_exists, generic_list
 from tm1cli.utils.tm1yaml import dump_process, load_process
 from tm1cli.utils.various import print_error_and_exit, resolve_database
 from tm1cli.utils.watch import watch_option
@@ -34,9 +34,7 @@ def list_process(
     List processes
     """
 
-    with TM1Service(**resolve_database(ctx, database)) as tm1:
-        for process in tm1.processes.get_all_names():
-            print(process)
+    generic_list("processes", ctx, database)
 
 
 @app.command()

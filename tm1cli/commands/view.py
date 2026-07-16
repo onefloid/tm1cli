@@ -1,12 +1,9 @@
 from typing import Annotated
 
 import typer
-from rich import print  # pylint: disable=redefined-builtin
-from TM1py.Services import TM1Service
 
 from tm1cli.utils.cli_param import DATABASE_OPTION, INTERVAL_OPTION, WATCH_OPTION
-from tm1cli.utils.generic import execute_exists
-from tm1cli.utils.various import resolve_database
+from tm1cli.utils.generic import execute_exists, generic_list
 from tm1cli.utils.watch import watch_option
 
 app = typer.Typer()
@@ -23,9 +20,7 @@ def list_view(
     List views
     """
 
-    with TM1Service(**resolve_database(ctx, database)) as tm1:
-        for view in tm1.views.get_all_names(cube_name):
-            print(view)
+    generic_list("views", ctx, database, cube_name=cube_name)
 
 
 @app.command()
