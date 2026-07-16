@@ -8,12 +8,18 @@ runner = CliRunner()
 
 
 @pytest.mark.parametrize("command", ["list", "ls"])
-def test_cube_list(mocker, command):
-    mocker.patch("tm1cli.commands.cube.TM1Service", MockedTM1Service)
-    result = runner.invoke(app, ["cube", command])
+@pytest.mark.parametrize(
+    "raw_option,expected_output",
+    [(None, "- Cube1\n- Cube2\n"), ("--output-raw", "Cube1\nCube2\n")],
+)
+def test_cube_list(mocker, command, raw_option, expected_output):
+    mocker.patch("tm1cli.utils.generic.TM1Service", MockedTM1Service)
+    args = [raw_option] if raw_option else []
+    args += ["cube", command]
+    result = runner.invoke(app, args)
     assert result.exit_code == 0
     assert isinstance(result.stdout, str)
-    assert result.stdout == "Cube1\nCube2\n"
+    assert result.stdout == expected_output
 
 
 @pytest.mark.parametrize(

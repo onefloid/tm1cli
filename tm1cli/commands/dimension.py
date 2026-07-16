@@ -1,12 +1,9 @@
 from typing import Annotated
 
 import typer
-from rich import print  # pylint: disable=redefined-builtin
-from TM1py.Services import TM1Service
 
 from tm1cli.utils.cli_param import DATABASE_OPTION, INTERVAL_OPTION, WATCH_OPTION
-from tm1cli.utils.generic import execute_exists
-from tm1cli.utils.various import resolve_database
+from tm1cli.utils.generic import execute_exists, generic_list
 from tm1cli.utils.watch import watch_option
 
 app = typer.Typer()
@@ -30,9 +27,7 @@ def list_dimension(
     List dimensions
     """
 
-    with TM1Service(**resolve_database(ctx, database)) as tm1:
-        for dim in tm1.dimensions.get_all_names(skip_control_dims):
-            print(dim)
+    generic_list("dimensions", ctx, database, skip_control_dims=skip_control_dims)
 
 
 @app.command()

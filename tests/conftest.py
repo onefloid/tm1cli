@@ -4,7 +4,7 @@ from TM1py import Process
 class MockedCubeService:
     cubes = ["Cube1", "Cube2"]
 
-    def get_all_names(self, cube_name: str):
+    def get_all_names(self, skip_control_cubes: bool):
         return self.cubes
 
     def exists(self, cube_name: str):
@@ -46,6 +46,9 @@ class MockedSubsetService:
 
 
 class MockedProcessService:
+    def get_all_names(self):
+        return ["Process1", "Process2"]
+
     def exists(self, name: str):
         return False if "not" in name else True
 

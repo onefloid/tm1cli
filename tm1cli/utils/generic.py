@@ -41,3 +41,31 @@ def execute_exists(attribute_name, ctx, database, **args):
         print(f":white_check_mark: {output_name} exists!")
     else:
         print(f":x: {output_name} does not exist!")
+
+
+def generic_list(attribute_name, ctx, database, **args):
+    """
+    Util function to execute a list function
+    """
+
+    database_config = resolve_database(ctx, database)
+
+    try:
+        with TM1Service(**database_config) as tm1:
+            attribute = getattr(tm1, attribute_name)
+            output = attribute.get_all_names(**args)
+    except (AttributeError, TypeError):
+        # Programming errors (wrong attribute_name or mismatched kwargs),
+        # not TM1 runtime errors - let them raise as real tracebacks.
+        raise
+    except Exception as e:  # pylint: disable=broad-except
+        print(f"[bold red]{type(e).__name__}:[/bold red] {e}")
+        raise typer.Exit(code=1) from e
+
+    if ctx.obj["raw"]:
+        for item in output:
+            print(item)
+        return
+
+    for item in output:
+        print(f"- {item}")
